@@ -1,0 +1,1 @@
+com.benbenlaw.kubejsde.kubejs.KubeJSDEPlugin
