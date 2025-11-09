@@ -18,11 +18,18 @@ import java.util.concurrent.RecursiveAction;
 
 public interface FusionRecipeJS {
 
-    RecipeKey<Ingredient> CATALYST = IngredientComponent.NON_EMPTY_INGREDIENT.inputKey("catalyst");
+    RecipeKey<ItemStack> RESULT = ItemStackComponent.ITEM_STACK.outputKey("result");
+    RecipeKey<Ingredient> CATALYST = IngredientComponent.INGREDIENT.inputKey("catalyst");
+
+
+
+
+
+
+
     RecipeKey<List<IFusionRecipe.IFusionIngredient>> INPUTS = IFusionIngredientComponent.INSTANCE
             .asList()
             .inputKey("ingredients");
-    RecipeKey<ItemStack> RESULT = ItemStackComponent.ITEM_STACK.outputKey("result");
     RecipeKey<TechLevel> TECH_LEVEL = TechLevelComponent.INSTANCE.inputKey("techLevel");
     RecipeKey<Integer> ENERGY = NumberComponent.INT.inputKey("totalEnergy");
 

@@ -6,7 +6,7 @@ import com.benbenlaw.kubejsde.kubejs.draconicevolution.TechLevelComponent;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
-import dev.latvian.mods.kubejs.recipe.schema.RecipeComponentFactoryRegistry;
+import dev.latvian.mods.kubejs.recipe.component.RecipeComponentTypeRegistry;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
 import net.minecraft.resources.ResourceLocation;
 
@@ -20,10 +20,12 @@ public class KubeJSDEPlugin implements KubeJSPlugin {
     }
 
     @Override
-    public void registerRecipeComponents(RecipeComponentFactoryRegistry registry) {
-        registry.register(TechLevelComponent.INSTANCE);
-        registry.register(IFusionIngredientComponent.INSTANCE);
+    public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
+        registry.register(IFusionIngredientComponent.TYPE);
+        registry.register(TechLevelComponent.TYPE);
+
     }
+
 
     @Override
     public void registerEvents(EventGroupRegistry registry) {

@@ -6,8 +6,10 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
+import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
+import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentValue;
 import dev.latvian.mods.rhino.Context;
 import dev.latvian.mods.rhino.type.TypeInfo;
@@ -23,9 +25,7 @@ public class IFusionIngredientComponent implements RecipeComponent<IFusionRecipe
 
     public static final IFusionIngredientComponent INSTANCE = new IFusionIngredientComponent();
 
-    private IFusionIngredientComponent() {
-    }
-
+    public static final RecipeComponentType<?> TYPE = RecipeComponentType.unit(ResourceLocation.fromNamespaceAndPath("kubejsde", "fusion_ingredient"), INSTANCE);
 
     public record SimpleFusionIngredient(Ingredient ingredient, boolean consume)
             implements IFusionRecipe.IFusionIngredient {
@@ -40,6 +40,11 @@ public class IFusionIngredientComponent implements RecipeComponent<IFusionRecipe
         }
     }
 
+
+    @Override
+    public RecipeComponentType<?> type() {
+        return TYPE;
+    }
 
     @Override
     public Codec<IFusionRecipe.IFusionIngredient> codec() {
@@ -60,7 +65,8 @@ public class IFusionIngredientComponent implements RecipeComponent<IFusionRecipe
     }
 
     @Override
-    public IFusionRecipe.IFusionIngredient wrap(Context cx, KubeRecipe recipe, Object from) {
+    public IFusionRecipe.IFusionIngredient wrap(RecipeScriptContext cx, Object from) {
+
         if (from instanceof List<?> list && list.size() >= 1) {
             String itemId = list.get(0).toString();
             boolean consume = list.size() > 1 && Boolean.parseBoolean(list.get(1).toString());
@@ -74,10 +80,6 @@ public class IFusionIngredientComponent implements RecipeComponent<IFusionRecipe
             return new SimpleFusionIngredient(Ingredient.of(item), true);
         }
 
-        return RecipeComponent.super.wrap(cx, recipe, from);
+        return RecipeComponent.super.wrap(cx, from);
     }
-
-
-
-
 }
